@@ -50,7 +50,6 @@ sudo cp /usr/local/bin/cri-dockerd /usr/bin/
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo yum install -y yum-utils
-cd /root/
 wget https://docs.projectcalico.org/manifests/calico-typha.yaml
 cat <<EOF | sudo tee /usr/lib/systemd/system/minikube.service
 [Unit]
