@@ -1,5 +1,5 @@
 resource "aws_instance" "instance_from_packer" {
-  depends_on = [aws_null_resource.packer]
+  depends_on = [null_resource.packer]
 instance_type = "t2.medium"
 ami = data.aws_ami.example.id
 subnet_id = "subnet-0a365d4f3eed934a6"
