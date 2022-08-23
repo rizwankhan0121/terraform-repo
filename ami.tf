@@ -27,7 +27,7 @@ resource "aws_lb" "testalb" {
 }
 
 resource "aws_lb_target_group" "test" {
-  name        = "riz-instance"
+  name        = "demo_instance"
   port        = "30107"
   protocol    = "HTTP"
   target_type = "instance"
@@ -54,4 +54,10 @@ default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.test.arn
   }
+}
+
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.test.arn
+  target_id        = aws_instance.instance_from_packer.id
 }
