@@ -10,7 +10,7 @@ associate_public_ip_address = "true"
 
 data "aws_ami" "example" {
   most_recent      = true
-  name_regex       = "^packer"
+ # name_regex       = "^packer"
   owners           = ["self"]
 }
 
