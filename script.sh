@@ -51,8 +51,6 @@ sudo systemctl enable docker
 sudo systemctl start docker
 sudo yum install -y yum-utils
 wget https://docs.projectcalico.org/manifests/calico-typha.yaml
-pwd
-kubectl create -f calico-typha.yaml
 cat <<EOF | sudo tee /usr/lib/systemd/system/minikube.service
 [Unit]
 Description=minikube
@@ -76,3 +74,4 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable minikube
 #sudo systemctl start minikube
+kubectl apply -f /home/ec2-user/cri-dockerd/calico-typha.yaml
