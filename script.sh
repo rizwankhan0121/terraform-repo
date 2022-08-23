@@ -1,6 +1,8 @@
 #!/bin/bash
 
     sudo yum -y install httpd
+    sudo systemctl daemon-reload
+    sudo systemctl enable httpd
     sudo systemctl start httpd
     sudo yum install -y mod_ssl
     cat <<EOF | sudo tee /etc/pki/tls/private/apache-selfsigned.key
@@ -73,10 +75,6 @@ EOF
     sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     sudo amazon-linux-extras install epel -y 
     sudo amazon-linux-extras install java-openjdk11 -y
-    sudo yum -y install jenkins
-   sudo systemctl daemon-reload
-   sudo systemctl enable jenkins
-   sudo systemctl start jenkins
    cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
