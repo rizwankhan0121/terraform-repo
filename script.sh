@@ -74,4 +74,4 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable minikube
 #sudo systemctl start minikube
-kubectl apply -f /home/ec2-user/cri-dockerd/calico-typha.yaml
+#kubectl apply -f /home/ec2-user/cri-dockerd/calico-typha.yaml
