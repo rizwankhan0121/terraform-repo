@@ -2,6 +2,6 @@
 
 terraform init
 
-terraform plan
+terraform plan -lock=false
 
 terraform apply -auto-approve
