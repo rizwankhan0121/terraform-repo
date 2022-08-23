@@ -62,20 +62,13 @@ VxJQ37NsGsv6kYDXGKFDQQFM7L9jQS2V5FG7NYDon2gHfR7Tyh2KpPIteYXiDg0f
 wqlBdEfshzEDB4wDMaIz
 -----END CERTIFICATE-----
 EOF
-cat <<EOF | sudo tee /etc/httpd/conf.d/testalb-140907780.eu-west-2.elb.amazonaws.com.conf
-<VirtualHost *:443>
-    ServerName testalb-140907780.eu-west-2.elb.amazonaws.com
-    DocumentRoot /var/www/html
-    SSLEngine on
-    SSLCertificateFile /etc/pki/tls/certs/apache-selfsigned.crt
-    SSLCertificateKeyFile /etc/pki/tls/private/apache-selfsigned.key
-</VirtualHost>
-EOF 
-    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-    sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-    sudo amazon-linux-extras install epel -y 
-    sudo amazon-linux-extras install java-openjdk11 -y
-   cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo amazon-linux-extras install epel -y 
+sudo amazon-linux-extras install java-openjdk11 -y
+
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
@@ -140,3 +133,12 @@ sudo systemctl daemon-reload
 sudo systemctl enable minikube
 #sudo systemctl start minikube
 #kubectl apply -f /home/ec2-user/cri-dockerd/calico-typha.yaml
+cat <<EOF | sudo tee /etc/httpd/conf.d/testalb-140907780.eu-west-2.elb.amazonaws.com.conf
+<VirtualHost *:443>
+    ServerName testalb-140907780.eu-west-2.elb.amazonaws.com
+    DocumentRoot /var/www/html
+    SSLEngine on
+    SSLCertificateFile /etc/pki/tls/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/apache-selfsigned.key
+</VirtualHost>
+EOF 
