@@ -27,7 +27,7 @@ resource "aws_lb" "testalb" {
 }
 
 resource "aws_lb_target_group" "test" {
-  name        = "demo_instance"
+  name        = "demo-instance-tg"
   port        = "30107"
   protocol    = "HTTP"
   target_type = "instance"
