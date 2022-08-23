@@ -27,16 +27,16 @@ resource "aws_lb" "testalb" {
 }
 
 resource "aws_lb_target_group" "test" {
-  name        = "demo-instance-tg"
-  port        = "30107"
-  protocol    = "HTTP"
+  name        = "apache-secure-tg"
+  port        = "443"
+  protocol    = "HTTPS"
   target_type = "instance"
   vpc_id      = "vpc-0a576c99d22eca9c4"
 
   health_check {
     healthy_threshold   = 3
     unhealthy_threshold = 3
-    protocol            = "HTTP"
+    protocol            = "HTTPS"
     port                = "traffic-port"
     # port = 9091
     path     = "/"
@@ -45,10 +45,10 @@ resource "aws_lb_target_group" "test" {
   }
 }
 
-resource "aws_lb_listener" "fixed_response_30107" {
+resource "aws_lb_listener" "fixed_response_443" {
   load_balancer_arn = aws_lb.testalb.arn
-  port              = "30107"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
 
 default_action {
     type             = "forward"
