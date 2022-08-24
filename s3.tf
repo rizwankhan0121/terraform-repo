@@ -20,3 +20,10 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
     status = "Enabled"
   }
 }
+
+resource "null_resource" "s3-bucket" {
+
+  provisioner "local-exec" {
+    command = "aws s3 sync /var/log/httpd/  s3://httpd-log-web/"
+  }
+}
