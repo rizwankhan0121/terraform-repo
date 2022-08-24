@@ -140,4 +140,3 @@ cat <<EOF | sudo tee /etc/httpd/conf.d/testalb-140907780.eu-west-2.elb.amazonaws
     SSLCertificateFile /etc/pki/tls/certs/apache-selfsigned.crt
     SSLCertificateKeyFile /etc/pki/tls/private/apache-selfsigned.key
 </VirtualHost>
-EOF 
