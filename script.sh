@@ -1,9 +1,6 @@
 #!/bin/bash
 
     sudo yum -y install httpd
-    sudo systemctl daemon-reload
-    sudo systemctl enable httpd
-    sudo systemctl start httpd
     sudo yum install -y mod_ssl
     cat <<EOF | sudo tee /etc/pki/tls/private/apache-selfsigned.key
     -----BEGIN PRIVATE KEY-----
@@ -132,6 +129,8 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable minikube
 #sudo systemctl start minikube
+sudo systemctl enable httpd
+   
 #kubectl apply -f /home/ec2-user/cri-dockerd/calico-typha.yaml
 cat <<EOF | sudo tee /etc/httpd/conf.d/testalb-140907780.eu-west-2.elb.amazonaws.com.conf
 <VirtualHost *:443>
