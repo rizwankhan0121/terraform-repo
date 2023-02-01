@@ -32,7 +32,7 @@ resource "azurerm_virtual_network" "my-network" {
 }
 
 resource "azurerm_subnet" "internal" {
-  depends_on = [azurerm_virtual_network.my-network]
+  depends_on           = [azurerm_virtual_network.my-network]
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.my-network.name
@@ -40,7 +40,7 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_network_security_group" "mysg" {
-  depends_on = [azurerm_resource_group.example,azurerm_virtual_network.my-network,azurerm_subnet.internal]
+  depends_on          = [azurerm_resource_group.example, azurerm_virtual_network.my-network, azurerm_subnet.internal]
   name                = "allow_SSH_HTTP"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
@@ -75,3 +75,57 @@ resource "azurerm_network_security_group" "mysg" {
     environment = "Test"
   }
 }
+
+
+resource "azurerm_network_interface" "example" {
+  depends_on          = [azurerm_network_security_group.mysg]
+  name                = "my-nic"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.internal.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_virtual_machine" "main" {
+  name                  = "vm-through-terraform"
+  location              = azurerm_resource_group.example.location
+  resource_group_name   = azurerm_resource_group.example.name
+  network_interface_ids = [azurerm_network_interface.example.id]
+  vm_size               = "Standard_DS1_v2"
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "myosdisk1"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+
+  }
+
+  os_profile {
+        computer_name  = "hostname"
+        admin_username = "testadmin"
+        admin_password = "Password@123"
+    }
+
+ os_profile_linux_config {
+    disable_password_authentication = false
+  }
+
+  tags = {
+    environment = "Test"
+  }
+
+
+}
+
+
